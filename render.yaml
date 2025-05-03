@@ -4,7 +4,7 @@ services:
     name: bloxbot-web
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app
+    startCommand: gunicorn --bind 0.0.0.0:$PORT wsgi:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -12,6 +12,21 @@ services:
         fromDatabase:
           name: bloxbot-db
           property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: no-referrer-when-downgrade
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'"
 
   - type: worker
     name: bloxbot-worker
@@ -27,8 +42,12 @@ services:
           property: connectionString
       - key: DISCORD_TOKEN
         sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+    autoDeploy: true
 
 databases:
   - name: bloxbot-db
     databaseName: bloxbot
     user: bloxbot
+    ipAllowList: [] # Restricts database access to only Render services
