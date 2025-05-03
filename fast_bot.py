@@ -7,6 +7,13 @@ import importlib
 from dotenv import load_dotenv
 from discord.ext import commands
 
+# Set optimization environment variables
+os.environ['PYTHONOPTIMIZE'] = '1'        # Turn on basic optimizations
+os.environ['PYTHONUNBUFFERED'] = '1'      # Remove output buffering for faster logs
+os.environ['PYTHONIOENCODING'] = 'utf-8'  # Set consistent encoding
+os.environ['PYTHONASYNCIODEBUG'] = '0'    # Disable asyncio debug mode
+os.environ['DISCORD_SKIP_EXTENSIVE_GUILD_CACHE'] = '1'  # Skip extensive guild caching
+
 # Configure minimal logging for faster startup
 logging.basicConfig(
     level=logging.INFO,
