@@ -47,7 +47,7 @@ If you prefer to set up the services manually:
 
 #### Discord Bot (Worker Service)
 - **Build Command**: `pip install -r requirements.txt`
-- **Start Command**: `python main.py`
+- **Start Command**: `bash start_fast.sh` (for faster login) or `python main.py`
 - **Environment Variables**:
   - `PYTHON_VERSION`: 3.11.0
   - `DISCORD_TOKEN`: Your Discord bot token
@@ -81,7 +81,16 @@ This bot implementation includes:
 1. Clone this repository
 2. Create a `.env` file based on `.env.example`
 3. Install dependencies: `pip install -r requirements.txt`
-4. Run the bot: `python main.py`
+4. Run the bot with one of these options:
+   - Standard startup: `python main.py`
+   - Fast startup: `bash start_fast.sh` or `python fast_bot.py`
+
+### Optimized Performance
+This bot includes performance optimizations:
+- `fast_bot.py` for rapid Discord login (~0.7s connection time)
+- Delayed database initialization after bot is already online
+- Optimized intents configuration for faster startup
+- `start_fast.sh` with performance flags enabled
 
 ## License
 
