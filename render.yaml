@@ -31,8 +31,10 @@ services:
   - type: worker
     name: bloxbot-worker
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: bash start_fast.sh
+    buildCommand: |
+      pip install -r requirements.txt
+      chmod +x start_fast.sh
+    startCommand: python fast_bot.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
